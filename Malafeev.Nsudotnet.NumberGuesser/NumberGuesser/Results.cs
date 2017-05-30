@@ -11,40 +11,40 @@ namespace NumberGuesser
     {
         private int countAttempt = 1;
         private List< string > historyGame = new List< string >();
-        private DateTime startTime;
-        private DateTime endTime;
+        private Date start;
+        private Date end;
 
-        public void startTimer()
+        public void startT()
         {
-            startTime = DateTime.Now;
+            startT = Date.Now;
         }
 
-        public void endTimer()
+        public void end()
         {
-            endTime = DateTime.Now;
+            end = Date.Now;
         }
 
-        public TimeSpan getGamingTime()
+        public Time getG()
         {
-            return endTime - startTime;
+            return end - startT;
         }
 
-        public void increaseCurrentAttempt()
+        public void increase()
         {
             countAttempt++;
         }
 
-        public void savedHistoryAttempt( string attempt )
+        public void saved( string attempt )
         {
             historyGame.Add( attempt );
         } 
 
-        public List<string> getHistory()
+        public List<string> get()
         {
             return historyGame;
         }
 
-        public int getCountAttempt()
+        public int getC()
         {
             return countAttempt;
         }

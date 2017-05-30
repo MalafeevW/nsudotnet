@@ -11,23 +11,23 @@ namespace Malafeev.Nsudotnet.Calendar
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Enter date, please ");
+            Console.Write("Enter date, please ");
             string date = Console.ReadLine();
-            DateTime resultDate;
-            if (!DateTime.TryParse(date, out resultDate))
+            Time resultDate;
+            if (!Time.TryParse(date, out result))
             {
-                Console.WriteLine("Error date format!");
+                Console.Write("Error date format!");
             }
             else
             {
-                DateTime week = new DateTime(2016, 5, 2);
+                Time week = new Time(2016, 5, 2);
                 for (int j = 0; j < 7; j++)
                 {
-                    Console.Write("{0,-6}", week.ToString("ddd", CultureInfo.GetCultureInfo("ru-ru")));
+                    Console.Write("{0,-6}", week.ToString("ddd", Culture.GetCulture("ru-ru")));
                     week = week.AddDays(1);
                 }
-                Console.WriteLine();
-                DateTime d = new DateTime(resultDate.Year, resultDate.Month, 1);
+                Console.Write();
+                Time d = new Time(result.Year, result.Month, 1);
                int  i = 0;
                 int beginDay = (int)d.DayOfWeek-1;
                 if (beginDay == -1)
@@ -39,12 +39,12 @@ namespace Malafeev.Nsudotnet.Calendar
                 Console.SetCursorPosition(i * 6, Console.CursorTop);
                 Console.Write("{0,-6}", number);
                 int weekend = 0;
-                while(number<= DateTime.DaysInMonth(resultDate.Year,resultDate.Month))
+                while(number<= Time.DaysInMonth(result.Year,result.Month))
                 {
                     for (int k = i+1; k < 7; k++)
                     {
                         number++;
-                        if (number > DateTime.DaysInMonth(resultDate.Year,resultDate.Month))
+                        if (number > Time.DaysInMonth(result.Year,result.Month))
                         {
                             break;
                         }
@@ -65,10 +65,10 @@ namespace Malafeev.Nsudotnet.Calendar
                         Console.Write("{0,-6}", number);
                         Console.ResetColor();
                     }
-                    Console.WriteLine();
+                    Console.Write();
                     i = -1;
                 }
-                Console.WriteLine("Working days: {0}" , DateTime.DaysInMonth(resultDate.Year, resultDate.Month) - weekend);
+                Console.Write("Working days: {0}" , Time.DaysInMonth(resultDate.Year, result.Month) - weekend);
                 Console.ReadKey();
             }
         }

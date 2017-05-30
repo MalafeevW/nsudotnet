@@ -15,17 +15,17 @@ namespace NumberGuesser
             "You’re a loser, I hate you", "What’s the matter, cat got your tongue?",
             "Get lost, I am tired of hearing from you." };
 
-        public static int botNumber = 0;
+        public static int bot = 0;
 
-        public void generateNumber()
+        public void generate()
         {
             Random random = new Random();
-            botNumber = random.Next( 101 );
+            bot = random.Next( 101 );
         }
 
-        public string giveHint(  int humanNumber )
+        public string giveHint(  int human )
         {
-            if( botNumber < humanNumber )
+            if( bot < human )
             {
                 return THIS_IS_BIG_NUMBER ;
             }
@@ -35,9 +35,9 @@ namespace NumberGuesser
             }
         }
 
-        public void callNames( string username )
+        public void call( string username )
         {        
-            Console.WriteLine( username + "!" + swearing[ new Random().Next( 0, swearing.Length ) ] );
+            Console.Write( username + "!" + swearing[ new Random().Next( 0, swearing.Length ) ] );
         }
     }
 }

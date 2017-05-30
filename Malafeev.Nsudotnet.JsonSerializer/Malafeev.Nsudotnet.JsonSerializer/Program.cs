@@ -13,21 +13,21 @@ namespace Malafeev.Nsudotnet.JsonSerializer
 
         public static void Main(String[] args)
         {
-            TestClass testClass = new TestClass();
+            Test test = new Test();
             JsonSerializer jsonSerializer = new JsonSerializer();
-            using (StreamWriter outputFileWriter = new StreamWriter("output.txt"))
+            using (Stream output = new Stream("output.txt"))
             {
-                int check = jsonSerializer.Serialize(testClass, outputFileWriter);
+                int check = jsonSerializer.Serialize(testClass, output);
                 switch (check)
                 {
                     case 0:
-                        Console.WriteLine("Successful serialize");
+                        Console.Write("Successful serialize");
                         break;
                     case 1:
-                        Console.WriteLine("Serialized object is null");
+                        Console.Write("Serialized object is null");
                         break;
                     case 2:
-                        Console.WriteLine("Object, you want to serialize, not serializible");
+                        Console.Write("Object, you want to serialize, not serializible");
                         break;
                 }
                 Console.ReadKey();

@@ -12,7 +12,7 @@ namespace Malafeev.Nsudotnet.JsonSerializer
     class JsonSerializer
     {
 
-        public int Serialize(Object serializibedObject, StreamWriter outputFileWriter) 
+        public int Serialize(Object serializibedObject, Stream output) 
         {
 
             if (serializibedObject == null)
@@ -29,66 +29,66 @@ namespace Malafeev.Nsudotnet.JsonSerializer
             }
 
 
-            FieldInfo[] objectFields = t.GetFields();
+            Field[] objectFields = t.GetFields();
 
             try
             {
-                  outputFileWriter.WriteLine("{");
+                  output.WriteLine("{");
 
-                    foreach (FieldInfo objectFieldInfo in objectFields)
+                    foreach (Field object in objectFields)
                     {
-                        var nonSerialized = objectFieldInfo.GetCustomAttributes(typeof(NonSerializedAttribute), false);
+                        var nonSerialized = objectField.Get(typeof(NonSerializedAttribute), false);
 
                         if (nonSerialized.Length == 0)     //если поле Serialised
                         {
-                            var objectFieldValue = objectFieldInfo.GetValue(serializibedObject);
+                            var objectFieldValue = objectField.GetValue(serializibedObject);
 
-                            if (objectFieldInfo.FieldType.IsPrimitive)
+                            if (objectField.FieldType.IsPrimitive)
                             {
-                                outputFileWriter.WriteLine(String.Format("\"{0}\": {1}", objectFieldInfo.Name, objectFieldValue.ToString()));
+                                output.Write(String.Format("\"{0}\": {1}", objectField.Name, objectFieldValue.ToString()));
                             }
                             else if (objectFieldValue is String)
                             {
-                                outputFileWriter.WriteLine(String.Format("\"{0}\": \"{1}\"", objectFieldInfo.Name, objectFieldValue.ToString()));
+                                output.Write(String.Format("\"{0}\": \"{1}\"", objectField.Name, objectFieldValue.ToString()));
                             }
                             else if (objectFieldValue is IEnumerable)
                             {
                                 StringBuilder arrayString = new StringBuilder();
-                                arrayString.Append(String.Format("\"{0}\": [", objectFieldInfo.Name));
+                                arrayString.Append(String.Format("\"{0}\": [", objectField.Name));
                                 foreach (var value in (IEnumerable)objectFieldValue)
                                 {
                                     arrayString.Append(value.ToString() + ",");
                                 }
                                 arrayString.Remove(arrayString.Length - 1, 1);
                                 arrayString.Append("]");
-                                outputFileWriter.WriteLine(arrayString);
+                                output.Write(arrayString);
                             }
                             else 
                             {   
-                                if(objectFieldInfo.FieldType.IsSerializable)
+                                if(objectField.FieldType.IsSerializable)
                                 {
 
                                     if (objectFieldValue == null)
                                     {
-                                        outputFileWriter.WriteLine(String.Format("\"{0}\": null", objectFieldInfo.Name));
+                                        output.Write(String.Format("\"{0}\": null", objectField.Name));
                                     }
                                     else
                                     {
-                                        outputFileWriter.WriteLine(String.Format("\"{0}\": ", objectFieldInfo.Name));
-                                        Serialize(objectFieldValue, outputFileWriter);
+                                        output.Write(String.Format("\"{0}\": ", objectField.Name));
+                                        Serialize(objectFieldValue, output);
                                     }
                                 }
                             }
                         }
                     }
 
-                    outputFileWriter.WriteLine("}");
-                    outputFileWriter.Flush();
+                    output.Write("}");
+                    output.Flush();
                     
             }
             catch (System.ArgumentException) 
             {
-                Console.WriteLine("incorrect output file name");
+                Console.Write("incorrect output file name");
                 Console.ReadKey(false);
             }
             return 0;

@@ -12,86 +12,86 @@ namespace NumberGuesser
 
         static void Main(string[] args)
         {
-            prepareGame();
+            prepare();
 
             Results results = new Results();
-            results.startTimer();
+            results.start();
 
             Bot bot = new Bot();
-            bot.generateNumber();
+            bot.generate();
 
-            Console.WriteLine( "Guess my number!" );
+            Console.Write( "Guess my number!" );
 
             bool flag = true;
             while ( flag )
             {
-                if( ( results.getCountAttempt() % 4 ) == 0 )
+                if( ( results.get() % 4 ) == 0 )
                 {
-                    bot.callNames(username);
+                    bot.call(username);
                 }
 
-                string userString = Console.ReadLine();
-                checkExitGame( userString );
+                string user = Console.Read();
+                Exit( userString );
 
-                int userNumber = Convert.ToInt32( userString );
+                int user = Convert.ToInt32( userString );
 
-                if ( !checkUserNumber( userNumber ) )
+                if ( !check( user ) )
                 {
-                    Console.WriteLine( bot.giveHint( userNumber ) );
+                    Console.Write( bot.giveHint( user ) );
 
-                    results.increaseCurrentAttempt();
-                    results.savedHistoryAttempt( userNumber + " " + bot.giveHint( userNumber ) );
+                    results.increase();
+                    results.saved( user + " " + bot.give( user ) );
                 }
                 else
                 {
                     flag = false;
-                    results.endTimer();
+                    results.end();
 
-                    finish( results.getCountAttempt(), results.getHistory(), results.getGamingTime() );
-                    Console.ReadLine();
+                    finish( results.get(), results.getH(), results.getG() );
+                    Console.Read();
                 }
             }
         }
 
-        public static void prepareGame()
+        public static void prepare()
         {
-            initNewUser();
-            Console.WriteLine("Hi! I can play in game with you! Ha-ha-ha-ha...");
+            init();
+            Console.Write("Hi! I can play in game with you! Ha-ha-ha-ha...");
         }
 
-        public static void initNewUser()
+        public static void init()
         {
-            Console.WriteLine("Enter your name");
-            username = Console.ReadLine();
+            Console.Write("Enter your name");
+            username = Console.Read();
         }
 
-        public static bool checkUserNumber( int userNumber )
+        public static bool check( int user )
         {
-            return userNumber == Bot.botNumber;
+            return user == Bot.bot;
         }
 
-        public static void checkExitGame( string userString )
+        public static void checkE( string user )
         {
-            if (userString == "q")
+            if (user == "q")
             {
-                Console.WriteLine("Sorry, I have to go... Goodbye!");
-                Console.ReadLine();
+                Console.Write("Sorry, I have to go... Goodbye!");
+                Console.Read();
                 Environment.Exit(0);
             }
         }
 
         public static void finish( int countAttempt, List<string> historyGame, TimeSpan gamingTime )
         {
-            Console.WriteLine( "YOU WINS" );
-            Console.WriteLine ("Your attempt: " + countAttempt );
-            Console.WriteLine( "Your Time: " + gamingTime.Minutes.ToString() + " minutes");
-            Console.WriteLine( "Your History Game: " );
-            historyGame.ForEach(print);
+            Console.Write( "YOU WINS" );
+            Console.Write ("Your attempt: " + countAttempt );
+            Console.Write( "Your Time: " + gamingTime.Minutes.ToString() + " minutes");
+            Console.Write( "Your History Game: " );
+            history.ForEach(print);
         }
 
         public static void print( string attempt )
         {
-            Console.WriteLine( attempt );
+            Console.Write( attempt );
         }
     }
 }
