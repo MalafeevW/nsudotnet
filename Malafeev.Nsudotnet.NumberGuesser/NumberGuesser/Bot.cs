@@ -23,7 +23,7 @@ namespace NumberGuesser
             bot = random.Next( 101 );
         }
 
-        public string giveHint(  int human )
+        public string give(  int human )
         {
             if( bot < human )
             {
