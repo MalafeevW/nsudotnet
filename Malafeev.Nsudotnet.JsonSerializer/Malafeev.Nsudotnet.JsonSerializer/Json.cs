@@ -39,7 +39,7 @@ namespace Malafeev.Nsudotnet.JsonSerializer
             var stringBuilder = new StringBuilder();
             var fieldInfos = typeResive.GetFields();
 
-            for (var index = 0; index < fieldInfos.Length; index++)
+            foreach (var info in fieldInfos)
             {
                 var fieldInfo = fieldInfos[index];
                 if (fieldInfo.GetCustomAttribute<NonSerializedAttribute>() != null)
