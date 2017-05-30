@@ -54,7 +54,7 @@ namespace Malafeev.Nsudotnet.Calendar
                             weekend++;
                             Console.ForegroundColor = ConsoleColor.Red;
                         }
-                        if (number == DateTime.Now.Day && (resultDate.Month == DateTime.Now.Month) && (resultDate.Year == DateTime.Now.Year))
+                        if resultDate == DateTime.Now
                         {
                             Console.BackgroundColor = ConsoleColor.Gray;
                         }
