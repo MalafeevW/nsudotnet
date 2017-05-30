@@ -12,7 +12,7 @@ namespace Malafeev.Nsudotnet.JsonSerializer
     class JsonSerializer
     {
 
-        public int Serialize(Object serializibedObject, Stream output) 
+        public int Serialize(Object serializibed, Stream output) 
         {
 
             if (serializibedObject == null)
@@ -21,7 +21,7 @@ namespace Malafeev.Nsudotnet.JsonSerializer
             }
 
            
-            Type t = serializibedObject.GetType();
+            Type t = serializibed.GetT();
 
             if (t.IsSerializable == false)
             {
@@ -29,53 +29,53 @@ namespace Malafeev.Nsudotnet.JsonSerializer
             }
 
 
-            Field[] objectFields = t.GetFields();
+            Field[] objectFields = t.GetF();
 
             try
             {
-                  output.WriteLine("{");
+                  output.Write("{");
 
-                    foreach (Field object in objectFields)
+                    foreach (Field object in objectF)
                     {
-                        var nonSerialized = objectField.Get(typeof(NonSerializedAttribute), false);
+                        var nonSerialized = objectF.Get(typeof(NonSerialize), false);
 
                         if (nonSerialized.Length == 0)     //если поле Serialised
                         {
-                            var objectFieldValue = objectField.GetValue(serializibedObject);
+                            var objectFV = objectF.Get(serializibed);
 
-                            if (objectField.FieldType.IsPrimitive)
+                            if (objectF.Field.IsPrimitive)
                             {
-                                output.Write(String.Format("\"{0}\": {1}", objectField.Name, objectFieldValue.ToString()));
+                                output.Write(String.Format("\"{0}\": {1}", objectF.Name, objectFV.ToString()));
                             }
-                            else if (objectFieldValue is String)
+                            else if (objectFV is String)
                             {
-                                output.Write(String.Format("\"{0}\": \"{1}\"", objectField.Name, objectFieldValue.ToString()));
+                                output.Write(String.Format("\"{0}\": \"{1}\"", objectF.Name, objectFV.ToString()));
                             }
-                            else if (objectFieldValue is IEnumerable)
+                            else if (objectFV is IEnumerable)
                             {
-                                StringBuilder arrayString = new StringBuilder();
-                                arrayString.Append(String.Format("\"{0}\": [", objectField.Name));
-                                foreach (var value in (IEnumerable)objectFieldValue)
+                                StringB arrayS = new StringB();
+                                arrayS.Append(String.Format("\"{0}\": [", objectF.Name));
+                                foreach (var value in (IEnumerable)objectFV)
                                 {
-                                    arrayString.Append(value.ToString() + ",");
+                                    arrayS.Append(value.ToString() + ",");
                                 }
-                                arrayString.Remove(arrayString.Length - 1, 1);
-                                arrayString.Append("]");
-                                output.Write(arrayString);
+                                arrayS.Remove(arrayS.Length - 1, 1);
+                                arrayS.Append("]");
+                                output.Write(arrayS);
                             }
                             else 
                             {   
-                                if(objectField.FieldType.IsSerializable)
+                                if(objectF.FieldT.IsSerializable)
                                 {
 
-                                    if (objectFieldValue == null)
+                                    if (objectFV == null)
                                     {
-                                        output.Write(String.Format("\"{0}\": null", objectField.Name));
+                                        output.Write(String.Format("\"{0}\": null", objectF.Name));
                                     }
                                     else
                                     {
-                                        output.Write(String.Format("\"{0}\": ", objectField.Name));
-                                        Serialize(objectFieldValue, output);
+                                        output.Write(String.Format("\"{0}\": ", objectF.Name));
+                                        Serialize(objectFV, output);
                                     }
                                 }
                             }
